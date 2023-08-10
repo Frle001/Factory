@@ -94,6 +94,20 @@ class MealController extends Controller
             $formattedMeals[] = $formattedMeal;
         }
 
+        $paginationLinks = [
+            'prev' => $meals->previousPageUrl(),
+            'next' => $meals->nextPageUrl(),
+            'self' => app('url')->full(),
+        ];
+
+        if ($paginationLinks['prev']) {
+            $paginationLinks['prev'] = $paginationLinks['prev'] . '&' . http_build_query($request->except('page'));;
+        }
+
+        if ($paginationLinks['next']) {
+            $paginationLinks['next'] = $paginationLinks['next'] . '&' . http_build_query($request->except('page'));
+        }
+
         return response()->json([
             'language' => $langCode,
             'meta' => [
@@ -103,6 +117,7 @@ class MealController extends Controller
                 'totalPages' => $meals->lastPage(),
             ],
             'meals' => $formattedMeals,
+            'links' => $paginationLinks,
         ]);
     }
 }
