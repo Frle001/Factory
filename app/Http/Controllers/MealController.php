@@ -109,14 +109,14 @@ class MealController extends Controller
         }
 
         return response()->json([
-            'language' => $langCode,
+            //'language' => $langCode,
             'meta' => [
                 'currentPage' => $meals->currentPage(),
                 'totalItems' => $meals->total(),
                 'itemsPerPage' => $meals->perPage(),
                 'totalPages' => $meals->lastPage(),
             ],
-            'meals' => $formattedMeals,
+            'data' => $formattedMeals,
             'links' => $paginationLinks,
         ]);
     }
